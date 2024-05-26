@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../viewmodel/user_vm/home_viewcontroller.dart';
+import '../viewmodel/home_controller/home_viewcontroller.dart';
+
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

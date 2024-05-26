@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../viewmodel/user_vm/user_viewcontroller.dart';
+import '../viewmodel/user_controller/user_viewcontroller.dart';
+
 
 class UserView extends StatefulWidget {
   const UserView({super.key});
