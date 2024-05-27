@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../widgets/customSnackBar.dart';
 import '../viewmodel/user_controller/user_viewcontroller.dart';
-
 
 class UserView extends StatefulWidget {
   const UserView({super.key});
@@ -37,13 +37,13 @@ class _UserViewState extends State<UserView> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 30,
+              height: 100,
             ),
             Center(
                 child: Text(
-              'Fill The Form ',
-              style: TextStyle(fontSize: 20),
-            )),
+                  'Fill The Form ',
+                  style: TextStyle(fontSize: 20),
+                )),
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 20),
               child: TextFormField(
@@ -51,7 +51,6 @@ class _UserViewState extends State<UserView> {
                 decoration: InputDecoration(
                   hintText: 'Enter Name',
                   contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                  filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
@@ -73,7 +72,6 @@ class _UserViewState extends State<UserView> {
                 decoration: InputDecoration(
                   hintText: 'Enter Age',
                   contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                  filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
@@ -93,9 +91,8 @@ class _UserViewState extends State<UserView> {
               child: TextFormField(
                 controller: userContorller.locationController,
                 decoration: InputDecoration(
-                  hintText: 'Location',
+                  hintText: 'Enter Location',
                   contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                  filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
@@ -115,14 +112,62 @@ class _UserViewState extends State<UserView> {
               child: Center(
                 child: ElevatedButton(
                     onPressed: () async {
-                      await userContorller.addData();
+                      if (userContorller.nameController.text == '' ||
+                          userContorller.ageController.text == '' ||
+                          userContorller.locationController.text == '')
+
+                      {
+                        CustomSnackbar.show(
+                          iconData: Icons.warning_amber,
+                          title: "Alert",
+                          message: "",
+                          backgroundColor: Colors.white,
+                          iconColor: Colors.redAccent,
+                          messageText: " Please fill the fields",
+                          messageTextColor: Colors.black,
+                        );
+                      }
+
+                      else{
+                        Get.dialog(
+                          const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          barrierDismissible: false,
+                        );
+
+                        bool isAdded = await userContorller.addUserData();
+                        Get.back();
+                        if (isAdded) {
+                          CustomSnackbar.show(
+                            iconData: Icons.check_circle,
+                            title: "Alert",
+                            message: "",
+                            backgroundColor: Colors.white,
+                            iconColor: Colors.green,
+                            messageText: "Record Added",
+                            messageTextColor: Colors.black,
+                          );
+                        } else {
+                          CustomSnackbar.show(
+                            iconData: Icons.warning_amber,
+                            title: "Alert",
+                            message: "",
+                            backgroundColor: Colors.white,
+                            iconColor: Colors.redAccent,
+                            messageText: " Failed",
+                            messageTextColor: Colors.black,
+                          );
+                        }
+                      }
+
                     },
                     child: Text('Submit'),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlueAccent)),
               ),
             )
           ],
-        ),
+        )
       ),
     );
   }

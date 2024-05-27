@@ -68,6 +68,10 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             SlidableAction(
                               onPressed: (BuildContext context) {
+
+                                homeContorller.nameController.text = user.name?? "";
+                                homeContorller.ageController.text = user.age?? "";
+                                homeContorller.locationController.text = user.location?? "";
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -78,8 +82,10 @@ class _HomeViewState extends State<HomeView> {
                                       onPressed: () async {
                                         String? documentId = user.documentId;
                                         String? userId = user.id;
+                                        Get.back();
                                         await homeContorller.updateUserData(documentId?? "" , userId ?? "");
                                         print("Update button pressed on tile: $index");
+
                                       },
                                     );
                                   },
