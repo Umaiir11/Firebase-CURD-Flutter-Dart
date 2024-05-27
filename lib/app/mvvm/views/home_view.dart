@@ -43,7 +43,8 @@ class _HomeViewState extends State<HomeView> {
         child: Obx(() {
           return homeContorller.isLoading.value
               ? Center(child: CircularProgressIndicator())
-              : RefreshIndicator(
+              : (homeContorller.userList != null && homeContorller.userList!.isNotEmpty) ?
+            RefreshIndicator(
                   onRefresh: homeContorller.getUsers,
                   child: ListView.builder(
                     itemCount: homeContorller.userList.length,
@@ -93,7 +94,7 @@ class _HomeViewState extends State<HomeView> {
                               },
                               backgroundColor: Color(0xFF21B7CA),
                               foregroundColor: Colors.white,
-                              icon: Icons.share,
+                              icon: Icons.edit,
                               label: 'Edit',
                             ),
                           ],
@@ -130,7 +131,8 @@ class _HomeViewState extends State<HomeView> {
                       );
                     },
                   ),
-                );
+                ):
+            Center(child: Text('Tap Add Button To \n      Add Users',style: TextStyle( fontSize: 20),));
         }),
       ),
     );
