@@ -7,7 +7,6 @@ import 'package:random_string/random_string.dart';
 import '../../models/user_model.dart';
 
 class UserViewController extends GetxController {
-  List<UserModel> userList = [];
 
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
